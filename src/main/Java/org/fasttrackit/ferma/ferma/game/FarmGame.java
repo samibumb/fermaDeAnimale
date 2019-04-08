@@ -12,9 +12,8 @@ public class FarmGame {
 
         Ingrijitor ion = new Ingrijitor(ferma);
 
-        Animal caine;
         try {
-            caine = new Animal("Az5or");
+           Animal caine = new Animal("Azor");
             ion.addAnimal(caine);
         }catch (ValidationException ve){
             System.out.println(ve.getMessage());
