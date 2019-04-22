@@ -24,4 +24,8 @@ public class Animal {
         System.out.println("Animalul " +nume+" doarme "+ sleepHours+" ore.");
 
     }
+
+    public String getNume() {
+        return nume;
+    }
 }
