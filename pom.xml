@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+          http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.ftit</groupId>
+    <artifactId>farm-game</artifactId>
+    <version>1.0-SNAPSHOT</version> <!-- Not relevant actually, version numbers overidden in CD pipeline jobs -->
+    <packaging>jar</packaging>
+    <name>Farm Game</name>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <maven.resources.plugin.version>3.0.2</maven.resources.plugin.version>
+        <maven.compiler.plugin.version>3.3</maven.compiler.plugin.version>
+
+    </properties>
+
+
+    <build>
+        <!-- Enable replacement of placeholders delimited by @..@ in resource files. -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/static</directory>
+                <targetPath>static/</targetPath>
+            </resource>
+        </resources>
+
+
+        <plugins>
+            <!-- Package as an executable jar -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven.resources.plugin.version}</version>
+                <configuration>
+                    <!-- Replace placeholders delimited by @..@ in resource files. -->
+                    <delimiters>
+                        <delimiter>@</delimiter>
+                    </delimiters>
+                </configuration>
+                <executions>
+                    <execution>
+                        <!-- Prepare files for Docker image build -->
+                        <id>copy-resources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/scripts</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/scripts</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/postgresql/postgresql -->
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.1-901-1.jdbc4</version>
+        </dependency>
+
+    </dependencies>
+
+</project>

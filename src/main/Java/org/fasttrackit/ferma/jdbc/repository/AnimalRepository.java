@@ -20,6 +20,11 @@ public class AnimalRepository {
                 System.out.println(resultSet.getString("id")+" "+resultSet.getString("animal_type")+
                         " "+resultSet.getString("age"));
             }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+
        }catch (Exception e){
            e.printStackTrace();
        }
@@ -27,6 +32,7 @@ public class AnimalRepository {
     }
 
     public static void main(String[] args){
+        System.out.println("Animal table from MySQL :");
         getAnimalByID(1L);
     }
 }
