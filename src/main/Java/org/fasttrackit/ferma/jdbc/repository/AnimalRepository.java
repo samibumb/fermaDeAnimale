@@ -15,9 +15,9 @@ public class AnimalRepository {
 
            Statement statement = connection.createStatement();
 
-           ResultSet resultSet = statement.executeQuery("Select * from animal");
+           ResultSet resultSet = statement.executeQuery("Select * from animal where id ="+id);
             while (resultSet.next()){
-                System.out.println(resultSet.getString("id")+" "+resultSet.getString("animal_type")+
+                System.out.println(resultSet.getString("id")+". "+resultSet.getString("animal_type")+
                         " "+resultSet.getString("age"));
             }
 
@@ -32,7 +32,7 @@ public class AnimalRepository {
     }
 
     public static void main(String[] args){
-        System.out.println("Animal table from MySQL :");
-        getAnimalByID(1L);
+        System.out.println("Animal table from MySQL :\nID/Animal/Age");
+        getAnimalByID(1);
     }
 }
